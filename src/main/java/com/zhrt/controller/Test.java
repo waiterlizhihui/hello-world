@@ -26,7 +26,7 @@ public class Test {
     public void testRequest(HttpServletRequest request, HttpServletResponse response){
         try {
             PrintWriter out = response.getWriter();
-            out.println("hello world");
+            out.println("hello world ");
             out.flush();
             out.close();
         } catch (IOException e) {
