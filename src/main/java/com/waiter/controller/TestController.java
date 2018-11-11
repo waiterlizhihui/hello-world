@@ -1,5 +1,6 @@
 package com.waiter.controller;
 
+import com.waiter.controller.common.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,10 +14,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("test")
-public class TestController {
+public class TestController extends BaseController{
     @RequestMapping(value="index")
     public String index(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("拦截页面");
+        logger.info("进入拦截页面");
         return "index";
     }
 }

@@ -1,4 +1,4 @@
-package com.zhrt.controller;
+package com.waiter.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

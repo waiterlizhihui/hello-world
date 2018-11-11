@@ -1,5 +1,6 @@
 package com.waiter.controller;
 
+import com.waiter.controller.common.BaseController;
 import com.waiter.utils.common.StringUtils;
 import com.waiter.utils.wechat.WeChatLoginUtil;
 import org.apache.shiro.SecurityUtils;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/login")
-public class WeChatLoginController {
+public class WeChatLoginController extends BaseController{
     @ResponseBody
     @RequestMapping(value="/wechat",method = RequestMethod.GET)
     public Object weChatQrCodeLogin(HttpServletRequest request, HttpServletResponse response){

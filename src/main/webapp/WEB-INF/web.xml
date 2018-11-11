@@ -15,9 +15,20 @@
         <!--如果不指定的话，默认查找/WEB-INF/applicationContext.xml，但是这里指定了-->
         <param-value>
             classpath*:spring/spring-context*.xml
-            classpath:shiro/spring-shiro.xml
+            classpath*:shiro/spring-shiro.xml
         </param-value>
     </context-param>
+
+    <!--logback扩展，监听,用于解决与spring的结合 -->
+    <listener>
+        <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+    </listener>
+    <!--加载logbcak的配置文件-->
+    <context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>classpath:logback.xml</param-value>
+    </context-param>
+
 
     <!-- 配置Spring MVC的前端控制器：DispatchcerServlet -->
     <servlet>
