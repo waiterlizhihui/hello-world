@@ -10,20 +10,23 @@
         <!--安全管理器-->
         <property name="securityManager" ref="securityManager"></property>
         <!--自定义访问拦截器-->
-        <!--<property name="filters">-->
-            <!--<map>-->
-                <!-- 创建一个基于拦截器的表单过滤器处理请求 -->
-                <!--<entry key="authc" value-ref="formAuthenFilter"/>-->
-            <!--</map>-->
-        <!--</property>-->
+        <property name="filters">
+            <map>
+                 <!--微信登录拦截器-->
+                <!--<entry key="wechatauthc" value-ref="weChatFormAuthenFilter"></entry>-->
+                <!--表单登录拦截器-->
+                <entry key="authc" value-ref="formAuthenFilter"></entry>
+            </map>
+        </property>
         <!--使用shiro的访问拦截器-->
         <property name="filterChainDefinitions">
             <ref bean="shiroFilterChainDefinitions"></ref>
         </property>
         <!--登录页地址-->
-        <property name="loginUrl" value="/login/getQrCode"></property>
+        <!--<property name="loginUrl" value="/login/wechat"></property>-->
+        <property name="loginUrl" value="/login/form"></property>
         <!--登录成功页跳转地址-->
-        <property name="successUrl" value="/index"></property>
+        <property name="successUrl" value="/login/success"></property>
         <!--权限认证不通过时的跳转地址-->
         <property name="unauthorizedUrl" value="/error/refuse"></property>
     </bean>
@@ -35,19 +38,20 @@
         <!--定义认证规则-->
         <property name="realms">
             <list>
-                <ref bean="wechatAuthorizingRealm"></ref>
-                <!--<ref bean="mobileFormAuthorizingRealm"></ref>-->
+                <!--<ref bean="weChatAuthorizingRealm"></ref>-->
+                <ref bean="formAuthorizingRealm"></ref>
             </list>
         </property>
         <!--定义缓存管理器，利用ehcache对授权信息，登录信息等需要读取数据库的信息进行缓存-->
         <property name="cacheManager" ref="cacheManager"></property>
         <!--定义session管理器-->
         <property name="sessionManager" ref="sessionManager"></property>
-        <!--定义记住我-->
+        <!--定义记住我管理器-->
         <!--<property name="rememberMeManager" ref="rememberMeManager"></property>-->
      </bean>
 
     <!-- 配置使用自定义认证器，可以实现多Realm认证，并且可以指定特定Realm处理特定类型的验证 -->
+    <!--这里没有实现自动的切换一个filter对应一个realm，如果想做到这个功能的话需要改写ModularRealmAuthenticator类，详见https://www.cnblogs.com/fengwenzhee/p/7121059.html-->
     <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
         <!-- 配置认证策略，只要有一个Realm认证成功即可，并且返回所有认证成功信息(也可以去定义其他的认证策略) -->
         <property name="authenticationStrategy">
@@ -55,10 +59,15 @@
         </property>
     </bean>
 
-    <!--定义PC端的认证规则-->
-    <bean id="wechatAuthorizingRealm" class="com.zhrt.shiro.WechatAuthorizingRealm" />
-    <!-- 定义手机端的认证规则 -->
-    <!--<bean id="mobileFormAuthorizingRealm" class="com.zhrt.shiro.security.PCFormAuthorizingRealm" />-->
+    <!--微信拦截器-->
+    <bean id="weChatFormAuthenFilter" class="com.waiter.shiro.filter.WeChatAuthenticationFilter"></bean>
+    <!--表单拦截器-->
+    <bean id="formAuthenFilter" class="com.waiter.shiro.filter.MyFormAuthenticationFilter"></bean>
+
+    <!--定义微信登录的认证规则-->
+    <bean id="weChatAuthorizingRealm" class="com.waiter.shiro.realm.WechatAuthorizingRealm" />
+    <!--定义表单登录的认证规则-->
+    <bean id="formAuthorizingRealm" class="com.waiter.shiro.realm.FormAuthorizingRealm" />
 
     <!-- ehcache缓存配置 -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -68,16 +77,16 @@
     <!--自定义session管理器-->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!--会话监听器-->
-        <!--<property name="sessionListeners" ref="sysSessionListener"></property>-->
+        <property name="sessionListeners" ref="sysSessionListener"></property>
         <!--sessionManager创建会话Cookie的模板-->
         <property name="sessionIdCookie">
             <bean class="org.apache.shiro.web.servlet.SimpleCookie">
-                <!-- 自定义会话标识默认为JSESSIONID -->
+                <!-- 自定义会话标识默认为JSESSIONID,据说这个命名会和tomcat，jetty的servlet容器名冲突 -->
                 <constructor-arg name="name" value="SR-SESSION-ID" />
-                <!--设置Cookie的域名，默认空，即当前访问的域名；-->
-                <!--<property name="domain" value=""/>-->
+                <!--&lt;!&ndash;设置Cookie的域名，默认空，即当前访问的域名；&ndash;&gt;-->
+                <property name="domain" value="mrw.so"/>
                 <!--设置Cookie的路径，默认空，即存储在域名根下-->
-                <!--<property name="path" value=""/>-->
+                <property name="path" value="/"/>
                 <!--设置Cookie的过期时间，秒为单位，默认-1表示关闭浏览器时过期Cookie；-->
                 <!--<property name="maxAge" value="">-->
                 <!-- 如果设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；此特性需要实现了Servlet 2.5 MR6及以上版本的规范的Servlet容器支持 -->
@@ -85,22 +94,22 @@
             </bean>
         </property>
         <!--利用redis实现分布式会话管理-->
-        <!--<property name="sessionDAO" ref="redisSessionDao"/>-->
+        <property name="sessionDAO" ref="redisSessionDao"/>
         <!-- 是否启用/禁用Session Id Cookie，默认是启用的；如果禁用后将不会设置Session Id Cookie，即默认使用了Servlet容器的JSESSIONID，且通过URL重写（URL中的“;JSESSIONID=id”部分）保存Session Id -->
         <property name="sessionIdCookieEnabled" value="true" />
         <!-- 定时清理僵尸会话 （即一些例如用户直接关闭浏览器导致的会话失效）-->
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-        <!-- session超时时间毫秒 -->
-        <property name="globalSessionTimeout" value="86400000"/>
+        <!-- session超时时间(毫秒)，即会话保持时间 -->
+        <property name="globalSessionTimeout" value="1800000"/>
     </bean>
 
     <!-- 自定义session监听类 -->
-    <!--<bean id="sysSessionListener" class="com.zhrt.shiro.listener.SysSessionListener"/>-->
+    <bean id="sysSessionListener" class="com.waiter.shiro.session.SysSessionListener"/>
 
     <!-- 自定义redis分布式会话管理实现类 -->
-    <!--<bean id="redisSessionDao" class="com.zhrt.common.shiro.RedisSessionDao" />-->
+    <bean id="redisSessionDao" class="com.waiter.shiro.session.RedisSessionDao" />
 
-    <!-- session会话过期校验定时器毫秒 -->
+    <!-- session会话过期校验定时器(单位毫秒) ,可以定期清理僵尸会话-->
     <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
         <!--设置调度时间间隔，单位毫秒，默认就是1小时-->
         <property name="interval" value="600000"></property>
@@ -137,9 +146,12 @@
                 /resources/** = anon
                 /logout = logout
                 /error/** = anon
-                /login/getQrCode = anon
-                /login/getAccessToken = anon
-                /** = anon
+                <!--必须对登录页面进行拦截。否则进入不了拦截器-->
+                <!--/login/wechat = wechatauthc-->
+                /login/form = authc
+                <!--不知道为什么使用微信登录的时候不能直接对根目录下的请求进行拦截-->
+                /** = user,authc
+                /test/** = user,authc
             </value>
         </constructor-arg>
     </bean>
@@ -148,7 +160,4 @@
     <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
         <property name="redirectUrl" value="/login" />
     </bean>
-
-    <!--自定义表单拦截器-->
-    <!--<bean id="formAuthenFilter" class="com.zhrt.shiro.FormAuthenFilter"></bean>-->
 </beans>

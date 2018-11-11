@@ -15,7 +15,7 @@
     <!-- 开启事务注解驱动 -->
     <tx:annotation-driven />
     <!-- 默认包扫描路径 -->
-    <context:component-scan base-package="com.zhrt.service com.zhrt.utils.wechat"/>
+    <context:component-scan base-package="com.waiter.service.common,com.waiter.utils.wechat"/>
     <!-- 加载配置文件 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">

@@ -54,4 +54,6 @@
             <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"></bean>
          </property> -->
     </bean>
+
+    <bean id="redisService" class="com.waiter.service.common.RedisService"></bean>
 </beans>

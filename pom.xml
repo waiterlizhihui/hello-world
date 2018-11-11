@@ -77,9 +77,9 @@
             </dependency>
             <!-- 添加 ehcache 实现 -->
             <dependency>
-                <groupId>net.sf.ehcache</groupId>
+                <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
-                <version>2.9.1</version>
+                <version>3.4.0</version>
             </dependency>
 
             <!-- spring 集成redis相关依赖 -->
@@ -111,6 +111,7 @@
                 <artifactId>jstl</artifactId>
                 <version>1.2</version>
             </dependency>
+
             <!-- 使用 @ResponseBody 注解的时候要用到 -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -132,6 +133,7 @@
                 <artifactId>fastjson</artifactId>
                 <version>1.2.45</version>
             </dependency>
+
             <!-- 测试支持 -->
             <dependency>
                 <groupId>junit</groupId>
@@ -139,6 +141,7 @@
                 <version>4.12</version>
                 <scope>test</scope>
             </dependency>
+
             <!--日志支持-->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -167,24 +170,37 @@
                 <version>2.8.2</version>
             </dependency>
 
-            <!-- spring 集成redis相关依赖 -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>1.8.4.RELEASE</version>
-            </dependency>
-            <!-- redis clients -->
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>2.9.0</version>
-            </dependency>
-
             <!-- httpclient支持 -->
             <dependency>
                 <groupId>commons-httpclient</groupId>
                 <artifactId>commons-httpclient</artifactId>
                 <version>3.1</version>
+            </dependency>
+
+            <!--字符串处理工具依赖-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+
+            <!-- 条形码、二维码生成  -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+
+            <!-- Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>17.0</version>
             </dependency>
         </dependencies>
     <build>

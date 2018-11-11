@@ -1,8 +1,9 @@
-package com.zhrt.shiro;
+package com.waiter.shiro.realm;
 
-import com.zhrt.utils.wechat.MyToken;
-import com.zhrt.utils.wechat.UserInfo;
-import com.zhrt.utils.wechat.WechatLoginUtil;
+import com.waiter.shiro.Token.WeChatToken;
+import com.waiter.shiro.principal.WeChatPrincipal;
+import com.waiter.utils.wechat.WeChatLoginUtil;
+import com.waiter.utils.wechat.WeChatUserInfo;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -23,14 +24,20 @@ public class WechatAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
-        MyToken myToken = (MyToken) authcToken;
-        UserInfo userInfo = WechatLoginUtil.getAccessToken(myToken.getCode());
-        if(null != userInfo){
+        WeChatToken weChatToken = (WeChatToken) authcToken;
+        WeChatUserInfo weChatUserInfo = WeChatLoginUtil.getAccessToken(weChatToken.getOauthCode());
+        WeChatPrincipal weChatPrincipal = new WeChatPrincipal();
+
+        if(null != weChatUserInfo){
             System.out.println("用户信息获取成功!");
+            weChatPrincipal.setWeChatUserInfo(weChatUserInfo);
+            //设置登录用户在系统中的唯一标识
+            weChatPrincipal.setUserId(weChatUserInfo.getUnionid());
         }else{
             throw new UnknownAccountException();
         }
-        return new SimpleAuthenticationInfo(userInfo,myToken.getPassword(),getName());
+
+        return new SimpleAuthenticationInfo(weChatPrincipal,weChatToken.getPassword(),getName());
     }
 
     /**

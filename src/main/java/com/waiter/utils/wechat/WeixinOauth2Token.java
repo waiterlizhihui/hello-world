@@ -1,4 +1,4 @@
-package com.zhrt.utils.wechat;
+package com.waiter.utils.wechat;
 
 
 /**

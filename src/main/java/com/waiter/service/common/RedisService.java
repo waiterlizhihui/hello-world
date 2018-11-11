@@ -1,4 +1,4 @@
-package com.zhrt.utils.common;
+package com.waiter.service.common;
 
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
  * @author lizhihui
  * @version 2018/11/1
  */
-@Service
 public class RedisService {
     /**
      * 定义一个用于操作string-string键值对的redis操作类
@@ -99,10 +98,10 @@ public class RedisService {
     }
 
     /**
-     * 根据key值获取string-string键值对
+     * 根据key值删除键值对(好像用redisStringTemplate这个实例也可以删除string-session键值对)
      * @param key
      */
-    public void deleteStringInRedis(String key) {
+    public void deleteRedis(String key) {
         try {
             redisStringTemplate.delete(key);
         } catch (Exception e) {
@@ -118,6 +117,4 @@ public class RedisService {
     public long getTtlByKey(String key){
         return redisStringTemplate.getExpire(key, TimeUnit.SECONDS);
     }
-
-
 }

@@ -12,7 +12,7 @@
     <!-- 自动扫描的包路径 -->
     <!--Spring配置中的use-default-filters用来指示是否自动扫描带有@Component、@Repository、@Service和@Controller的类-->
     <!--<context:include-filter/> 用来指定扫描那些注解，现在指定了只扫描@Controller注解的类-->
-    <context:component-scan base-package="com.zhrt.controller" use-default-filters="false">
+    <context:component-scan base-package="com.waiter.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -44,7 +44,7 @@
     <mvc:default-servlet-handler/>
 
     <!--资源路径-->
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"/>
 
     <!--jsp文件的位置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -53,6 +53,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!-- 根目录访问的映射位置 -->
-    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/WEB-INF/view" view-name="redirect:/test/index"/>
 
 </beans>

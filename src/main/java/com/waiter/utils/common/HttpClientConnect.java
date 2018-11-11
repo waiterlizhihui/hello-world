@@ -1,4 +1,4 @@
-package com.zhrt.utils.common;
+package com.waiter.utils.common;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;

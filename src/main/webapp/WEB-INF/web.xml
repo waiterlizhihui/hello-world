@@ -14,7 +14,7 @@
         <param-name>contextConfigLocation</param-name>
         <!--如果不指定的话，默认查找/WEB-INF/applicationContext.xml，但是这里指定了-->
         <param-value>
-            classpath:spring/spring-context.xml,
+            classpath*:spring/spring-context*.xml
             classpath:shiro/spring-shiro.xml
         </param-value>
     </context-param>
