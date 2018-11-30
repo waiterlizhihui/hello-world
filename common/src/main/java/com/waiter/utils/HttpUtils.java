@@ -12,7 +12,13 @@ import java.io.*;
 import java.util.Map;
 
 /**
- * http请求的工具类
+ * @ClassName StringUtils
+ * @Description http请求的工具类，通过org.apache.commons.httpclient包实现，提供的功能有：
+ * 1.发送get请求并返回字符串或者二进制流
+ * 2.发送post请求并返回字符串或者二进制流
+ * @Author lizhihui
+ * @Date 2018/11/28 9:40
+ * @Version 1.0
  */
 public class HttpUtils {
     /**
