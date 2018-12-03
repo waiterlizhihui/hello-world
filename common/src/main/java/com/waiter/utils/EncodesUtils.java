@@ -14,13 +14,15 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * 封装各种格式的编码解码工具类.
+ * @ClassName EncodesUtils
+ * @Description 封装各种格式的编码解码工具类, 封装的由有：
  * 1.Commons-Codec的 hex/base64 编码
  * 2.自制的base62 编码
  * 3.commons.text的xml/html escape
  * 4.JDK提供的URLEncoder
- * @author lizhihui
- * @version 2018-11-11
+ * @Author lizhihui
+ * @Date 2018/12/1 17:21
+ * @Version 1.0
  */
 public class EncodesUtils {
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
@@ -56,7 +58,7 @@ public class EncodesUtils {
 	public static byte[] decodeBase64(String input) {
 		return Base64.decodeBase64(input.getBytes());
 	}
-	
+
 	/**
 	 * 字符串Base64编码
 	 */
