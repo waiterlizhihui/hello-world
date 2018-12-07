@@ -72,6 +72,12 @@
             <artifactId>commons-text</artifactId>
         </dependency>
 
+        <!--excel导出-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
+
         <!-- Guava工程包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等-->
         <dependency>
             <groupId>com.google.guava</groupId>

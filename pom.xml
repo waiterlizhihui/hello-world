@@ -195,6 +195,12 @@
                 <version>1.4</version>
             </dependency>
 
+            <!--报表exceld导出-->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>3.9</version>
+            </dependency>
 
             <!-- 条形码、二维码生成  -->
             <dependency>

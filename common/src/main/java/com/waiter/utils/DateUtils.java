@@ -4,10 +4,8 @@ package com.waiter.utils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @ClassName DateUtils
@@ -231,8 +229,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        Date date = new Date();
-        String a = formatDate(date, "E");
-        System.out.println(a);
+        Map<String,String> map = new HashMap<>();
     }
 }
