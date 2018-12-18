@@ -58,6 +58,23 @@
                 <version>${spring.version}</version>
             </dependency>
 
+            <!--spring aop支持-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>1.8.9</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.8.9</version>
+            </dependency>
+
             <!-- 添加 Shiro 的支持 -->
             <dependency>
                 <groupId>org.apache.shiro</groupId>

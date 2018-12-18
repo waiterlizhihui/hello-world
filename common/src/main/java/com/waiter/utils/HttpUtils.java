@@ -42,7 +42,7 @@ public class HttpUtils {
     /**
      * 添加日志信息
      */
-    private final static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
      * 初始化ConnectionManger的方法

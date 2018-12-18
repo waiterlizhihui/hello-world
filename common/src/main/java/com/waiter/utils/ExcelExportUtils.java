@@ -15,7 +15,8 @@ import java.util.List;
 
 /**
  * @ClassName ExcelExportUtils
- * @Description Excel导出工具类
+ * @Description Excel导出工具类，主要提供了以下功能：
+ * 1.将excel表导出到指定输出流
  * @Author lizhihui
  * @Date 2018/12/5 17:46
  * @Version 1.0
@@ -26,7 +27,7 @@ public class ExcelExportUtils {
      * @param modelPath excel格式模板的路径(建议放在resouces文件夹下面，比如resouces下面的testModel模板，传入的模板路径就为/excelModel/testModel.xls)
      * @param dataList 导出到excel表中的数据集合
      * @param out 导出的输出流
-     * @param offset 导出的偏移值，因为excel模板的表头可能占据多行，我们不知道应该从那一行开始填充数据，所以必须传入一个偏移量说明从第几行开始填充数据
+     * @param offset 导出的偏移值，因为excel模板的表头可能占据多行，我们不知道应该从那一行开始填充数据，所以必须传入一个偏移量说明从第几行开始填充数据。注意：这个值从0开始
      * @param <T>
      * @throws IOException
      */
