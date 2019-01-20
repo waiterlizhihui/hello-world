@@ -24,7 +24,7 @@ public class FileUtils {
      * @throws Exception
      */
     public static byte[] getBytesFromFile(File file) throws Exception {
-        byte[] ret = null;
+        byte[] byteArray = null;
         FileInputStream in = null;
         ByteArrayOutputStream out = null;
         try {
@@ -36,11 +36,10 @@ public class FileUtils {
             byte[] b = new byte[4096];
             int n;
             while ((n = in.read(b)) != -1) {
-                System.out.println(n);
                 out.write(b, 0, n);
             }
-            out.close();
-            ret = out.toByteArray();
+            out.flush();
+            byteArray = out.toByteArray();
         } finally {
             if (in != null) {
                 in.close();
@@ -49,7 +48,7 @@ public class FileUtils {
                 out.close();
             }
         }
-        return ret;
+        return byteArray;
     }
 
     /**
