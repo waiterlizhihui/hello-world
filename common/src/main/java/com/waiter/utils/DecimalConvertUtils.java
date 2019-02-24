@@ -139,4 +139,23 @@ public class DecimalConvertUtils {
         Integer decimal = binaryToDecimal(binary);
         return decimalToOctal(decimal);
     }
+
+    /**
+     * 将加密后生成的bytes数组转换成十六进制表示的字符串
+     * 转换原理：由于一个byte长8位，可以由两个十六进制表示，所以生成的十六进制的字符串的长度为byte数组长度的两倍
+     * @param bytes
+     * @return
+     */
+    public static String byteToHex(byte[] bytes){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i=0;i<bytes.length;i++){
+            //byte是有符号数，而bytes[i] & 0xff是将byte转换成无符号int类型的方式（0xff默认为int类型，一个byte只有八位，和32位的0xff进行与运算之后，前24位都被置成了0，byte中的符号位到了int中之后直接没用了）
+            String hex = Integer.toHexString(bytes[i] & 0xff);
+            if(hex.length()<2){
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hex);
+        }
+        return stringBuilder.toString();
+    }
 }

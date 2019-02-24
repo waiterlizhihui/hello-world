@@ -1,13 +1,16 @@
 package com.waiter.utils;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
 /**
@@ -18,7 +21,7 @@ import java.util.Properties;
  * @Version 1.0
  */
 public class PropertiesLoaderUtils {
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PropertiesLoaderUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertiesLoaderUtils.class);
 
     private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
@@ -33,15 +36,82 @@ public class PropertiesLoaderUtils {
     }
 
     /**
+     * 获取int类型的属性
+     * @param key
+     * @return
+     */
+    public Integer getInteger(String key){
+        String value = getProperties(key);
+        if (value == null) {
+            throw new NoSuchElementException();
+        }
+        return Integer.valueOf(value);
+    }
+
+    /**
+     * 获取int类型的属性，没有属性的话则返回默认值
+     * @param key
+     * @param defalut
+     * @return
+     */
+    public Integer getInteger(String key,String defalut){
+        String value = getProperties(key,defalut);
+        if (value == null) {
+            throw new NoSuchElementException();
+        }
+        return Integer.valueOf(value);
+    }
+
+    /**
+     * 获取double类型的属性
+     * @param key
+     * @return
+     */
+    public Double getDouble(String key){
+        String value = getProperties(key);
+        if (value == null) {
+            throw new NoSuchElementException();
+        }
+        return Double.valueOf(value);
+    }
+
+    /**
+     * 获取double类型的属性，没有属性的话则返回默认值
+     * @param key
+     * @param defalut
+     * @return
+     */
+    public Double getDouble(String key,String defalut){
+        String value = getProperties(key,defalut);
+        if (value == null) {
+            throw new NoSuchElementException();
+        }
+        return Double.valueOf(value);
+    }
+
+    /**
      * 获取propertise属性值
      * @param key
      * @return
      */
     public String getProperties(String key){
-        if(properties.contains(key)){
+        if(properties.containsKey(key)){
             return properties.getProperty(key);
         }
         return "";
+    }
+
+    /**
+     * 获取propertise属性值,如果没有值的话则返回默认值
+     * @param key
+     * @param defalut 默认值
+     * @return
+     */
+    public String getProperties(String key,String defalut){
+        if(properties.containsKey(key)){
+            return properties.getProperty(key);
+        }
+        return defalut;
     }
 
     /**
@@ -65,5 +135,11 @@ public class PropertiesLoaderUtils {
             }
         }
         return props;
+    }
+
+    public static void main(String[] args){
+        PropertiesLoaderUtils loaderUtils = new PropertiesLoaderUtils("config.properties");
+        String x = loaderUtils.getProperties("x");
+        System.out.println(x);
     }
 }

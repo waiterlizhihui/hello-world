@@ -94,6 +94,12 @@
             <artifactId>commons-text</artifactId>
         </dependency>
 
+        <!--文件上传依赖-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
         <!-- 添加Shiro的核心库依赖-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
